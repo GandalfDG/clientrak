@@ -6,6 +6,9 @@ class Agent(models.Model):
     last_name = models.CharField(max_length=256)
     minimum_rate = models.DecimalField(max_digits=8, decimal_places=2)
 
+    def __str__(self):
+        return f'{self.first_name} {self.last_name}'
+
 
 class Client(models.Model):
     client_first_name = models.CharField(max_length=256)
@@ -13,7 +16,7 @@ class Client(models.Model):
     agent = models.ForeignKey(Agent, models.CASCADE, null=True)
 
     def __str__(self):
-        return f'{self.client_last_name}, {self.client_first_name}'
+        return f'{self.client_first_name} {self.client_last_name}'
 
 
 class Trip(models.Model):
@@ -21,6 +24,10 @@ class Trip(models.Model):
     commission = models.DecimalField(max_digits=8, decimal_places=2)
     time_spent = models.DurationField()
     client = models.ForeignKey(Client, models.CASCADE, null=True)
+
+    def __str__(self):
+        client = self.client
+        return f'{self.trip_name} for {str(client)}'
 
     def effective_hourly_rate(self):
         worked_hours = self.time_spent.total_seconds() / 3600
