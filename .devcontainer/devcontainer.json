@@ -25,6 +25,7 @@
 	// "remoteUser": "vscode"
 
 	"extensions": [
-		"ms-python.python"
+		"ms-python.python",
+        "Vue.volar"
 	]
 }
