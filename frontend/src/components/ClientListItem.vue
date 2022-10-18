@@ -18,7 +18,7 @@ const timeDisplay = computed(() => {
 </script>
 
 <template>
-    <div class="box">
+    <div class="box mb-2">
         <div class="level is-mobile">
             <div class="level-left">
                 <div class="level-item">
