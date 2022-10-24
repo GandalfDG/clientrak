@@ -5,7 +5,6 @@ from clients.models import Trip
 from clients.serializers import TripSerializer
 
 # Create your views here.
-@csrf_exempt
 def trip_list(request):
     if request.method == 'GET':
         trips =  Trip.objects.all()

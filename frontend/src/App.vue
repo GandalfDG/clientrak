@@ -6,16 +6,6 @@ import { onMounted } from 'vue';
 
 const backendURL = import.meta.env.VITE_BACKEND_URL
 
-const ax = axios.create({
-  url: '/api',
-  baseURL: backendURL
-})
-
-
-onMounted(() => {
-
-})
-
 </script>
 
 <template>

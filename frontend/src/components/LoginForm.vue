@@ -18,7 +18,7 @@ function submitLogin() {
         }
     }).then((response) => {
         if (response.status === 200) {
-            window.sessionStorage('authtoken', response.data.token)
+            window.sessionStorage.setItem('authtoken', response.data.token)
         }
     })
 }
