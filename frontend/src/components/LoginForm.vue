@@ -4,6 +4,8 @@ import { ref } from 'vue'
 
 const backendURL = import.meta.env.VITE_BACKEND_URL
 
+const emit = defineEmits(['loggedIn'])
+
 const emailField = ref(null)
 const passwordField = ref(null)
 
@@ -19,6 +21,7 @@ function submitLogin() {
     }).then((response) => {
         if (response.status === 200) {
             window.sessionStorage.setItem('authtoken', response.data.token)
+            emit('loggedIn')
         }
     })
 }
