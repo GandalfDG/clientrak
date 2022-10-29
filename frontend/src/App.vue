@@ -3,8 +3,15 @@ import axios from 'axios'
 import ClientListItem from '@/components/ClientListItem.vue'
 import LoginForm from '@/components/LoginForm.vue'
 import { onMounted } from 'vue';
+import { RouterView } from 'vue-router'
+
+import NavBar from '@/components/NavBar.vue'
 
 const backendURL = import.meta.env.VITE_BACKEND_URL
+
+function isLoggedIn() {
+
+}
 
 function loggedIn() {
     console.log('logged in!')
@@ -13,11 +20,6 @@ function loggedIn() {
 </script>
 
 <template>
-    <h1 class="title">Backend URL: {{backendURL}}</h1>
-    <section class="section">
-        <LoginForm @logged-in="loggedIn"></LoginForm>
-    </section>
-    <section class="section">
-        <ClientListItem></ClientListItem>
-    </section>
+    <NavBar></NavBar>
+    <RouterView></RouterView>
 </template>

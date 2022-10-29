@@ -29,7 +29,7 @@ function submitLogin() {
 
 <template>
     <div class="box">
-        <h1 class="title is-4 mb-4">Login</h1>
+        <h1 class="title is-3 mb-4">Login</h1>
         <div class="field">
             <p class="control has-icons-left">
                 <input class="input" type="email" v-model="emailField" placeholder="Email">
@@ -46,8 +46,12 @@ function submitLogin() {
                 </span>
             </p>
         </div>
-        <button class="button is-primary" @click="submitLogin()"><p>Submit</p> <span class="icon">
-            <i class="fas fa-arrow-right"></i>
-        </span></button>
+        <div class="field is-grouped is-grouped-right">
+            <button class="button is-primary" @click="submitLogin()">
+                <p>Submit</p> <span class="icon">
+                    <i class="fas fa-arrow-right"></i>
+                </span>
+            </button>
+        </div>
     </div>
 </template>
