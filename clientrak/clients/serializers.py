@@ -11,7 +11,8 @@ class ClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Client
         fields = ['client_first_name', 'client_last_name', 'agent']
-        depth = 1
+        read_only_fields = ['agent']
+
 
 class TripSerializer(serializers.ModelSerializer):
     client = ClientSerializer(many=False)
