@@ -7,9 +7,6 @@ class Agent(models.Model):
     minimum_rate = models.DecimalField(max_digits=8, decimal_places=2)
 
 
-    def __str__(self):
-        return f'{self.first_name} {self.last_name}'
-
 
 class Client(models.Model):
     client_first_name = models.CharField(max_length=256)

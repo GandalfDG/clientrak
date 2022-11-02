@@ -1,12 +1,11 @@
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.parsers import JSONParser
-from clients.models import Trip
+from rest_framework import generics
+
+from clients.models import Agent, Trip
 from clients.serializers import TripSerializer
 
 # Create your views here.
-def trip_list(request):
-    if request.method == 'GET':
-        trips =  Trip.objects.all()
-        serializer = TripSerializer(trips, many=True)
-        return JsonResponse(serializer.data, safe=False)
+class AgentTrips(generics.ListCreateAPIView):
+    def get_queryset(self):
+        agent = Agent.objects.get(user__username=self.request.user.get_username())
+        agent_trips = Trip.objects.filter(client__agent__user__username=agent.user.get_username())
+        return agent_trips
