@@ -8,6 +8,10 @@ class AgentTrips(generics.ListCreateAPIView):
     def get_serializer_class(self):
         return TripSerializer
 
+    def get_serializer(self, *args, **kwargs):
+        return super().get_serializer(*args, **kwargs)
+
+
     # def get_queryset(self):
     #     return Trip.objects.all()
 
