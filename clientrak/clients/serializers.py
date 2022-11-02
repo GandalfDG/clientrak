@@ -13,6 +13,15 @@ class ClientSerializer(serializers.ModelSerializer):
         depth = 1
 
 class TripSerializer(serializers.ModelSerializer):
+    client = ClientSerializer(many=False)
+
+    def create(self, validated_data):
+        client_data = validated_data.pop('client')
+        trip = Trip.objects.create(**validated_data)
+        client = Client.objects.get_or_create(**client_data)
+        client.save()
+        return trip
+
     class Meta:
         model = Trip
         fields = ['trip_name', 'commission', 'time_spent', 'client']
