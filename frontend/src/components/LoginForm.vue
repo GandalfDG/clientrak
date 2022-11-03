@@ -4,10 +4,12 @@ import { ref } from 'vue'
 
 const backendURL = import.meta.env.VITE_BACKEND_URL
 
-const emit = defineEmits(['loggedIn'])
+const emit = defineEmits(['loggedIn', 'loginFail'])
 
 const emailField = ref(null)
 const passwordField = ref(null)
+
+const passwordCorrect = ref(true)
 
 function submitLogin() {
     axios({
@@ -21,10 +23,24 @@ function submitLogin() {
     }).then((response) => {
         if (response.status === 200) {
             window.sessionStorage.setItem('authtoken', response.data.token)
+            loginSuccess()
             emit('loggedIn')
         }
+    }, (response) => {
+        loginFailed()
     })
 }
+
+// handle changes to the form when logging in here
+function loginSuccess() {
+    passwordCorrect = true
+}
+
+function loginFailed() {
+    passwordCorrect.value = false
+    passwordField.value = null
+}
+
 </script>
 
 <template>
@@ -40,7 +56,7 @@ function submitLogin() {
         </div>
         <div class="field">
             <p class="control has-icons-left">
-                <input class="input" type="password" v-model="passwordField" placeholder="Password">
+                <input class="input" :class="{'is-danger': !passwordCorrect}" type="password" v-model="passwordField" placeholder="Password">
                 <span class="icon is-small is-left">
                     <i class="fas fa-key"></i>
                 </span>

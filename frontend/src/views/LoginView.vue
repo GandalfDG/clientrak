@@ -2,7 +2,7 @@
 import LoginForm from '@/components/LoginForm.vue'
 
 function loggedIn() {
-
+    console.log("login successful")
 }
 
 </script>
