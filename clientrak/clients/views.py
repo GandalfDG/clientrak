@@ -24,8 +24,4 @@ class UpdateTrip(generics.RetrieveUpdateAPIView):
 
     permission_classes = [UserTripPermission]
     serializer_class = TripSerializer
-
-    def get_queryset(self):
-        agent = Agent.objects.get(user__username=self.request.user.get_username())
-        agent_trips = Trip.objects.filter(client__agent=agent)
-        return agent_trips
+    queryset = Trip.objects.all()
