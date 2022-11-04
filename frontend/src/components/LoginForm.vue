@@ -1,6 +1,7 @@
 <script setup>
 import axios from 'axios'
 import { ref } from 'vue'
+import router from '@/main'
 
 const backendURL = import.meta.env.VITE_BACKEND_URL
 
@@ -33,7 +34,8 @@ function submitLogin() {
 
 // handle changes to the form when logging in here
 function loginSuccess() {
-    passwordCorrect = true
+    passwordCorrect.value = true
+    router.push('/agent')
 }
 
 function loginFailed() {

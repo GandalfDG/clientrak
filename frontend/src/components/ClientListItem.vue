@@ -1,9 +1,14 @@
 <script setup>
-import { computed } from '@vue/reactivity';
+import { computed, ref } from '@vue/reactivity';
 
+const props = defineProps(['tripData'])
 
-const clientName = "John Doe"
-const tripName = "Disney World"
+const clientName = computed(() => {
+    return ''.concat(props.tripData.client.client_first_name, ' ', props.tripData.client.client_last_name)
+})
+
+const tripName = ref(props.tripData.trip_name)
+
 const commissionEstimate = 256.32
 const timeSpent = 18 * 60 * 60 + 275
 
