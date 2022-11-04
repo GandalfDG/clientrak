@@ -13,8 +13,11 @@ const timeSpent = ref(props.tripData.time_spent)
 const commissionEstimate = 256.32
 
 const timeDisplay = computed(() => {
-    const substrings = props.tripData.time_spent.split(':')
-    return ''.concat(substrings[0], ':', substrings[1])
+    const hours = (Math.floor(timeSpent.value / 3600)).toString()
+    const minutes = (Math.floor((timeSpent.value % 3600) / 60)).toString()
+    
+    const paddedMinutes = minutes.length < 2 ? '0' + minutes : minutes
+    return ' '.concat(hours, ':', paddedMinutes)
 })
 
 </script>

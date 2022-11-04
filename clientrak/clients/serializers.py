@@ -1,6 +1,18 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import Agent, Client, Trip
+from datetime import timedelta
+
+class SimpleTimeSerializer(serializers.TimeField):
+    """
+    Simply turn a timedelta into a number of seconds
+    rather than a string representation
+    """
+    def to_representation(self, value):
+        return value.total_seconds()
+
+    def to_internal_value(self, value):
+        return timedelta(seconds=value)
 
 class AgentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,6 +27,7 @@ class ClientSerializer(serializers.ModelSerializer):
 
 class TripSerializer(serializers.ModelSerializer):
     client = ClientSerializer(many=False)
+    time_spent = SimpleTimeSerializer()
 
     def create(self, validated_data):
         agent = Agent.objects.get(user=self.context['request'].user)
