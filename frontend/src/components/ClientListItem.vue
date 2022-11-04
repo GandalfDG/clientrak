@@ -8,16 +8,13 @@ const clientName = computed(() => {
 })
 
 const tripName = ref(props.tripData.trip_name)
+const timeSpent = ref(props.tripData.time_spent)
 
 const commissionEstimate = 256.32
-const timeSpent = 18 * 60 * 60 + 275
 
 const timeDisplay = computed(() => {
-    const hours = (Math.floor(timeSpent / 3600)).toString()
-    const minutes = (Math.floor((timeSpent % 3600) / 60)).toString()
-    
-    const paddedMinutes = minutes.length < 2 ? '0' + minutes : minutes
-    return ' '.concat(hours, ':', paddedMinutes)
+    const substrings = props.tripData.time_spent.split(':')
+    return ''.concat(substrings[0], ':', substrings[1])
 })
 
 </script>
@@ -42,7 +39,7 @@ const timeDisplay = computed(() => {
                         </span>
                         <h1>{{ timeDisplay }}</h1>
                         <span class="icon">
-                            <i class="fas fa-pause"></i>
+                            <i class="fas fa-play"></i>
                         </span>
                     </span>
                     </button>
