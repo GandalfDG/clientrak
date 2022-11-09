@@ -3,8 +3,11 @@ from django.contrib.auth.models import User
 import datetime
 
 class Agent(models.Model):
-    user = models.ForeignKey(User, models.CASCADE, null=True)
+    user = models.ForeignKey(User, models.CASCADE, null=False)
     minimum_rate = models.DecimalField(max_digits=8, decimal_places=2)
+
+    def __str__(self):
+        return  self.user.get_full_name() if self.user.get_full_name() else self.user.username
 
 
 
