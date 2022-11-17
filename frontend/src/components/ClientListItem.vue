@@ -1,6 +1,8 @@
 <script setup>
 import { computed, ref } from '@vue/reactivity';
 
+import ClientTimer from '@/components/ClientTimerButton.vue'
+
 const props = defineProps(['tripData'])
 
 const clientName = computed(() => {
@@ -11,14 +13,6 @@ const tripName = ref(props.tripData.trip_name)
 const timeSpent = ref(props.tripData.time_spent)
 
 const commissionEstimate = 256.32
-
-const timeDisplay = computed(() => {
-    const hours = (Math.floor(timeSpent.value / 3600)).toString()
-    const minutes = (Math.floor((timeSpent.value % 3600) / 60)).toString()
-    
-    const paddedMinutes = minutes.length < 2 ? '0' + minutes : minutes
-    return ' '.concat(hours, ':', paddedMinutes)
-})
 
 </script>
 
@@ -35,17 +29,7 @@ const timeDisplay = computed(() => {
             </div>
             <div class="level-right">
                 <div class="level-item">
-                    <button class="button is-success">
-                    <span class="icon-text">
-                        <span class="icon">
-                            <i class="far fa-clock"></i>
-                        </span>
-                        <h1>{{ timeDisplay }}</h1>
-                        <span class="icon">
-                            <i class="fas fa-play"></i>
-                        </span>
-                    </span>
-                    </button>
+                    <ClientTimer></ClientTimer>
                 </div>
                 <div class="level-item">
                     <span class="icon">
