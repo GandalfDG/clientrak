@@ -13,8 +13,15 @@ const dummyClientData = {
     "id": 1
 }
 
+const dummyAgentData = {
+    "activities": [
+        "park phonecall",
+        "dining reservation"
+    ]
+}
+
 </script>
 
 <template>
-    <Timer :trip-data="dummyClientData"></Timer>
+    <Timer :trip-data="dummyClientData" :agent-data="dummyAgentData"></Timer>
 </template>
