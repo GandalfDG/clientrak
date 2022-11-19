@@ -1,7 +1,7 @@
 from rest_framework import generics
 
 from clients.models import Agent, Trip
-from clients.serializers import TripSerializer
+from clients.serializers import TripSerializer, AgentSerializer
 from clients.permissions import UserTripPermission
 
 # Create your views here.
@@ -19,6 +19,18 @@ class AgentTrips(generics.ListCreateAPIView):
         agent = Agent.objects.get(user__username=self.request.user.get_username())
         agent_trips = Trip.objects.filter(client__agent__user__username=agent.user.get_username())
         return agent_trips
+
+class AgentView(generics.RetrieveUpdateAPIView):
+
+    serializer_class = AgentSerializer
+
+    def get_object(self):
+        queryset = self.get_queryset()
+        return queryset
+
+    def get_queryset(self):
+        return Agent.objects.get(user__username=self.request.user.get_username())
+
 
 class UpdateTrip(generics.RetrieveUpdateAPIView):
 

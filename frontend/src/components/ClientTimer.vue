@@ -61,7 +61,7 @@ function togglePause() {
             </div>
         </div>
         <div class="control">
-            <button class="button is-primary">
+            <button class="button is-success is-outlined">
                 <span class="icon">
                     <i class="fas fa-plus"></i>
                 </span>

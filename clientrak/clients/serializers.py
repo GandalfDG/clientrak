@@ -15,9 +15,11 @@ class SimpleTimeSerializer(serializers.TimeField):
         return timedelta(seconds=value)
 
 class AgentSerializer(serializers.ModelSerializer):
+    activities = serializers.StringRelatedField(many=True)
+
     class Meta:
         model = Agent
-        fields = ['first_name', 'last_name', 'minimum_rate']
+        fields = ['user', 'minimum_rate', 'activity_types']
 
 class ClientSerializer(serializers.ModelSerializer):
     class Meta:
