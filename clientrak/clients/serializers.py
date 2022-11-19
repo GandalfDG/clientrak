@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Agent, Client, Trip
+from .models import Agent, Client, Trip, Activity, ActivityType
 from datetime import timedelta
 
 class SimpleTimeSerializer(serializers.TimeField):
@@ -27,9 +27,31 @@ class ClientSerializer(serializers.ModelSerializer):
         fields = ['client_first_name', 'client_last_name', 'agent']
 
 
+class ActivityTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ActivityType
+        fields = ['name']
+
+
+class ActivityCRUDSerializer(serializers.ModelSerializer):
+    time_spent = SimpleTimeSerializer()
+
+    class Meta:
+        model = Activity
+        fields = ['trip', 'time_spent', 'act_type']
+
+class ActivityNestedSerializer(serializers.ModelSerializer):
+    act_type = serializers.StringRelatedField()
+
+    class Meta:
+        model = Activity
+        fields = ['act_type', 'time_spent', 'create_date', 'updated_date']
+
+
 class TripSerializer(serializers.ModelSerializer):
     client = ClientSerializer(many=False)
-    time_spent = SimpleTimeSerializer()
+    time_spent = SimpleTimeSerializer(read_only=True)
+    activities = ActivityNestedSerializer(many=True, read_only=True)
 
     def create(self, validated_data):
         agent = Agent.objects.get(user=self.context['request'].user)
@@ -45,7 +67,6 @@ class TripSerializer(serializers.ModelSerializer):
         instance.client = client
         instance.trip_name = validated_data.get('trip_name', instance.trip_name)
         instance.commission = validated_data.get('commission', instance.commission)
-        instance.time_spent = validated_data.get('time_spent', instance.time_spent)
 
         instance.save()
 
@@ -53,6 +74,7 @@ class TripSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Trip
-        fields = ['trip_name', 'commission', 'time_spent', 'client', 'id']
+        fields = ['trip_name', 'commission', 'time_spent', 'client', 'activities', 'id']
         depth = 1
+
 

@@ -31,12 +31,20 @@ class Client(models.Model):
 class Trip(models.Model):
     trip_name = models.CharField(max_length=1024)
     commission = models.DecimalField(max_digits=8, decimal_places=2)
-    time_spent = models.DurationField()
     client = models.ForeignKey(Client, models.CASCADE, null=True)
 
     def __str__(self):
         client = self.client
         return f'{self.trip_name} for {str(client)}'
+
+    def time_spent(self):
+        time_spent = datetime.timedelta()
+        for activity in self.activity_set.all():
+            time_spent = time_spent + activity.time_spent
+        return time_spent
+
+    def activities(self):
+        return self.activity_set.all()
 
     def effective_hourly_rate(self):
         worked_hours = self.time_spent.total_seconds() / 3600
@@ -48,6 +56,8 @@ class Activity(models.Model):
 
     trip = models.ForeignKey(Trip, on_delete=models.CASCADE, null=True)
     time_spent = models.DurationField(default=datetime.timedelta())
+    create_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
     act_type = models.ForeignKey(
         ActivityType, on_delete=models.SET_NULL, null=True)
 
